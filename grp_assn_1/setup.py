@@ -11,15 +11,16 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools','numpy','scipy'],
     zip_safe=True,
     maintainer='dhruv',
     maintainer_email='cooldhruvagrawal@gmail.com',
-    description='TODO: Package description',
+    description='Publish Pose by calculating Forward Kinematics',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'fwd_kin_exec = grp_assn_1.fwd_kn:main'
         ],
     },
 )
