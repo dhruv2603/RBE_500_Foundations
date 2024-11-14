@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'fwd_kin_exec = grp_assn_1.fwd_kn:main'
+            'fwd_kin_exec = grp_assn_1.fwd_kn:main',
+            'inv_kn_server = grp_assn_1.inv_kn_srv:main',
+            'inv_kn_cli = grp_assn_1.inv_kn_client:main' 
         ],
     },
 )

@@ -19,6 +19,8 @@ import numpy
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Pose
 from scipy.spatial.transform import Rotation as R
+from sensor_msgs.msg import JointState
+
 
 def HTM_to_Pose(H):
     position_vec  = H[:3,3]
@@ -34,22 +36,24 @@ class ForwardKinematics(Node):
         self.publisher_ = self.create_publisher(Pose, 'end_pose', 10)
         
         self.subscription = self.create_subscription(
-            Float32MultiArray,
-            'joint_vals',
+            JointState,
+            'joint_states',
             self.calculate_end_pose,
             10)
         self.subscription  # prevent unused variable warning
 
     def calculate_end_pose(self,msg):
         #Implement the calculation of end effector pose
-        self.get_logger().info(f"{msg.data}")
+        self.get_logger().info(f"{msg.name}")
         
-        q1 = msg.data[0]  # stores the values of incoming float32multiarray
-        q2 = msg.data[1]
-        q3 = msg.data[2]
-        q4 = msg.data[3]   
+        
+        q1 = msg.position[0]  # stores the values of incoming float32multiarray
+        q2 = msg.position[1]
+        q3 = msg.position[2]
+        q4 = msg.position[3]
+        q5 = msg.position[4]   
         '''
-        The values of links are assumed to be 0.5 
+        The values of links are given
         and the DH parameters are calculated according to the diagram as follows 
         '''
         l0 = 36.076
