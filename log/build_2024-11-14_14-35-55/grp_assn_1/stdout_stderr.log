@@ -1,0 +1,25 @@
+running egg_info
+writing ../build/grp_assn_1/grp_assn_1.egg-info/PKG-INFO
+writing dependency_links to ../build/grp_assn_1/grp_assn_1.egg-info/dependency_links.txt
+writing entry points to ../build/grp_assn_1/grp_assn_1.egg-info/entry_points.txt
+writing requirements to ../build/grp_assn_1/grp_assn_1.egg-info/requires.txt
+writing top-level names to ../build/grp_assn_1/grp_assn_1.egg-info/top_level.txt
+reading manifest file '../build/grp_assn_1/grp_assn_1.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../build/grp_assn_1/grp_assn_1.egg-info/SOURCES.txt'
+running build
+running build_py
+copying grp_assn_1/inv_kn_srv.py -> /home/dhruv/rbe500-ros/src/build/grp_assn_1/build/lib/grp_assn_1
+running install
+running install_lib
+copying /home/dhruv/rbe500-ros/src/build/grp_assn_1/build/lib/grp_assn_1/inv_kn_srv.py -> /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1
+byte-compiling /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1/inv_kn_srv.py to inv_kn_srv.cpython-310.pyc
+running install_data
+running install_egg_info
+removing '/home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1-0.0.0-py3.10.egg-info' (and everything under it)
+Copying ../build/grp_assn_1/grp_assn_1.egg-info to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1-0.0.0-py3.10.egg-info
+running install_scripts
+Installing fwd_kin_exec script to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/grp_assn_1
+Installing inv_kn_cli script to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/grp_assn_1
+Installing inv_kn_server script to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/grp_assn_1
+writing list of installed files to '/home/dhruv/rbe500-ros/src/build/grp_assn_1/install.log'

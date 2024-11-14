@@ -1,0 +1,6 @@
+{
+  "package_name": "custom_interfaces",
+  "non_idl_tuples": [
+    "/home/dhruv/rbe500-ros/src/custom_interfaces:srv/InvKin.srv"
+  ]
+}

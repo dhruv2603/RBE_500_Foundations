@@ -21,6 +21,7 @@ from geometry_msgs.msg import Pose
 # from geometry_msgs.msg import Quaternion
 from scipy.spatial.transform import Rotation as R
 from custom_interfaces.srv import InvKin
+from open_manipulator_msgs.srv import SetJointPosition
 
 # def HTM_to_Pose(H):
 #     position_vec  = H[:3,3]
@@ -33,8 +34,11 @@ class InverseKinematicsService(Node):
     def __init__(self):
         super().__init__('inverse_kinematics_service')
         self.srv = self.create_service(InvKin,'calc_inv_kin',self.calc_inv_kn)
+        self.goal_joint_space = self.create_client(SetJointPosition, 'goal_joint_space_path')
+        self.goal_joint_space_req = SetJointPosition.Request()
+        self.tool_control_req = SetJointPosition.Request()
 
-    def calc_inv_kn(self,request,response):
+    def calc_inv_kn(self,request,response, path_time=0.1):
         x = request.pose.position.x
         y = request.pose.position.y
         z = request.pose.position.z
@@ -79,6 +83,16 @@ class InverseKinematicsService(Node):
         # msg = Float32MultiArray()
         # response = msg.data
         response.joint_vals.data = [theta_1, theta_2, theta_3, theta_4]
+
+        self.goal_joint_space_req.joint_position.joint_name = ['joint1', 'joint2', 'joint3', 'joint4', 'gripper']
+        self.goal_joint_space_req.joint_position.position = [theta_1, theta_2, theta_3, theta_4, 0.0]
+        self.goal_joint_space_req.path_time = path_time
+
+        try:
+            self.goal_joint_space.call_async(self.goal_joint_space_req)
+        except Exception as e:
+            self.get_logger().info('Sending Goal Joint failed %r' % (e,))
+
         
 
         return response

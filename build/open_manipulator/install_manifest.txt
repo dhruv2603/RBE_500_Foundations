@@ -1,0 +1,15 @@
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/ament_index/resource_index/package_run_dependencies/open_manipulator
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/ament_index/resource_index/parent_prefix_path/open_manipulator
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/environment/ament_prefix_path.sh
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/environment/ament_prefix_path.dsv
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/environment/path.sh
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/environment/path.dsv
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/local_setup.bash
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/local_setup.sh
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/local_setup.zsh
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/local_setup.dsv
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/package.dsv
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/ament_index/resource_index/packages/open_manipulator
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/cmake/open_manipulatorConfig.cmake
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/cmake/open_manipulatorConfig-version.cmake
+/home/dhruv/rbe500-ros/src/install/open_manipulator/share/open_manipulator/package.xml

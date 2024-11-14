@@ -1,0 +1,9 @@
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:msg/JointPosition.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:msg/KinematicsPose.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:msg/OpenManipulatorState.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:srv/GetJointPosition.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:srv/GetKinematicsPose.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:srv/SetJointPosition.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:srv/SetKinematicsPose.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:srv/SetDrawingTrajectory.idl
+/home/dhruv/rbe500-ros/src/build/open_manipulator_msgs/rosidl_adapter/open_manipulator_msgs:srv/SetActuatorState.idl
