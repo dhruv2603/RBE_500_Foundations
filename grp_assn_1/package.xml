@@ -12,8 +12,9 @@
   <depend>geometry_msgs</depend>
   <depend>rosidl_default_runtime</depend>
 
-  <exec_depend>scipy</exec_depend>
+  <exec_depend>scipy</exec_depend> 
   <exec_depend>numpy</exec_depend>
+   <exec_depend>time</exec_depend>
   <exec_depend>custom_interfaces</exec_depend>
   <exec_depend>open_manipulator_msgs</exec_depend>
 

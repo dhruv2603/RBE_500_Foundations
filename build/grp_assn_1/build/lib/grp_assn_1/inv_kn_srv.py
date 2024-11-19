@@ -18,28 +18,25 @@ import math
 import numpy
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Pose
-# from geometry_msgs.msg import Quaternion
-from scipy.spatial.transform import Rotation as R
+# from scipy.spatial.transform import Rotation as R
 from custom_interfaces.srv import InvKin
-from open_manipulator_msgs.srv import SetJointPosition
-
-goal_joint_angle = [0.0, 0.0, 0.0, 0.0, 0.0]
-
-# def HTM_to_Pose(H):
-#     position_vec  = H[:3,3]
-#     rotation_mat  = H[:3,:3]
-#     rotation = R.from_matrix(rotation_mat)
-#     quaternion = rotation.as_quat()
-#     return position_vec,quaternion
+# from open_manipulator_msgs.srv import SetJointPosition
+import time
 
 class InverseKinematicsService(Node):
     def __init__(self):
         super().__init__('inverse_kinematics_service')
-        self.srv = self.create_service(InvKin,'calc_inv_kin',self.calc_inv_kn)
-        self.goal_joint_space_req = SetJointPosition.Request()
-        self.tool_control_req = SetJointPosition.Request()
+        # self.srv = self.create_service(InvKin,'calc_inv_kin',self.calc_inv_kn)
+        self.srv = self.create_service(InvKin,'pick_object',self.pick_object)
+        
+        self.l0 = 36.076
+        self.l1 = 60.25
+        self.l2 = 128.0
+        self.l3 = 24.0
+        self.l4 = 124.0
+        self.l5 = 133.4
 
-    def calc_inv_kn(self,request,response, path_time):
+    def calc_inv_kn(self,request,response, path_time=0.1):
         x = request.pose.position.x
         y = request.pose.position.y
         z = request.pose.position.z
@@ -48,31 +45,18 @@ class InverseKinematicsService(Node):
                                f"{request.pose.orientation.x}, {request.pose.orientation.y}, {request.pose.orientation.z}, {request.pose.orientation.w}")
         self.get_logger().info('Incoming request\nx:%d y:%d z:%d'%(x,y,z))
 
-        # q = Quaternion()
-        # q[0] = request.pose.orientation.x
-        # q[1] = request.pose.orientation.y
-        # q[2] = request.pose.orientation.z
-        # q[3] = request.pose.orientation.w
-
-        l0 = 36.076
-        l1 = 60.25
-        l2 = 128.0
-        l3 = 24.0
-        l4 = 124.0
-        l5 = 133.4
-
         theta_1 = numpy.arctan2(y,x)
         
         r  = numpy.sqrt(numpy.square(x) + numpy.square(y))
-        r2 = l0 + l1 - z - l5
-        D  = (numpy.square(l2) + numpy.square(l3) + numpy.square(l4) - numpy.square(r) - numpy.square(r2))/(2*l4*numpy.sqrt(numpy.square(l2) + numpy.square(l3)))
+        r2 = self.l0 + self.l1 - z - self.l5
+        D  = (numpy.square(self.l2) + numpy.square(self.l3) + numpy.square(self.l4) - numpy.square(r) - numpy.square(r2))/(2*self.l4*numpy.sqrt(numpy.square(self.l2) + numpy.square(self.l3)))
 
         theta_y = numpy.arctan2(numpy.sqrt(1 - numpy.square(D)),D)
-        theta_v = numpy.arctan2(l3,l2)
+        theta_v = numpy.arctan2(self.l3,self.l2)
         
         theta_3 = numpy.pi/2 + theta_v - theta_y
 
-        D2 = (numpy.square(r) + numpy.square(r2) + numpy.square(l2) + numpy.square(l3) - numpy.square(l4))/(2*numpy.sqrt(numpy.square(r) + numpy.square(r2))*numpy.sqrt(numpy.square(l2) + numpy.square(l3)))
+        D2 = (numpy.square(r) + numpy.square(r2) + numpy.square(self.l2) + numpy.square(self.l3) - numpy.square(self.l4))/(2*numpy.sqrt(numpy.square(r) + numpy.square(r2))*numpy.sqrt(numpy.square(self.l2) + numpy.square(self.l3)))
 
         theta_z = numpy.arctan2(numpy.sqrt(1 - numpy.square(D2)),D2)
         theta_w = numpy.arctan2(r,r2)
@@ -81,12 +65,10 @@ class InverseKinematicsService(Node):
 
         theta_4 = numpy.pi/2 - theta_2 - theta_3
 
-        # msg = Float32MultiArray()
-        # response = msg.data
         response.joint_vals.data = [theta_1, theta_2, theta_3, theta_4]
 
         self.goal_joint_space_req.joint_position.joint_name = ['joint1', 'joint2', 'joint3', 'joint4', 'gripper']
-        self.goal_joint_space_req.joint_position.position = [goal_joint_angle[0], goal_joint_angle[1], goal_joint_angle[2], goal_joint_angle[3], goal_joint_angle[4]]
+        self.goal_joint_space_req.joint_position.position = [theta_1, theta_2, theta_3, theta_4, 0.0]
         self.goal_joint_space_req.path_time = path_time
 
         try:
@@ -96,6 +78,84 @@ class InverseKinematicsService(Node):
 
         
 
+        return response
+    
+    def calc_theta(self,x,y,z):
+        r  = numpy.sqrt(numpy.square(x) + numpy.square(y))
+        r2 = self.l0 + self.l1 - z - self.l5
+        D  = (numpy.square(self.l2) + numpy.square(self.l3) + numpy.square(self.l4) - numpy.square(r) - numpy.square(r2))/(2*self.l4*numpy.sqrt(numpy.square(self.l2) + numpy.square(self.l3)))
+
+        theta_y = numpy.arctan2(numpy.sqrt(1 - numpy.square(D)),D)
+        theta_v = numpy.arctan2(self.l3,self.l2)
+        
+        theta_3 = numpy.pi/2 + theta_v - theta_y
+
+        D2 = (numpy.square(r) + numpy.square(r2) + numpy.square(self.l2) + numpy.square(self.l3) - numpy.square(self.l4))/(2*numpy.sqrt(numpy.square(r) + numpy.square(r2))*numpy.sqrt(numpy.square(self.l2) + numpy.square(self.l3)))
+
+        theta_z = numpy.arctan2(numpy.sqrt(1 - numpy.square(D2)),D2)
+        theta_w = numpy.arctan2(r,r2)
+
+        theta_2 = numpy.pi - theta_v - theta_z - theta_w
+
+        theta_4 = numpy.pi/2 - theta_2 - theta_3
+
+        return theta_2, theta_3, theta_4
+
+        
+    
+    def pick_object(self,request,response, path_time=10.0):
+        x = request.pose.position.x
+        y = request.pose.position.y
+        z = request.pose.position.z
+
+        self.get_logger().info(f"Received pose: {request.pose.position.x}, {request.pose.position.y}, {request.pose.position.z}, "
+                               f"{request.pose.orientation.x}, {request.pose.orientation.y}, {request.pose.orientation.z}, {request.pose.orientation.w}")
+        self.get_logger().info('Incoming request\nx:%d y:%d z:%d'%(x,y,z))
+
+        theta_1 = numpy.arctan2(y,x)
+        #######################################
+        ##Go to the intermediate position
+        # z_mid = 80
+
+        theta_2, theta_3, theta_4 = self.calc_theta(x,y,z)
+
+        # self.send_goal_joint_space(theta_1, theta_2, theta_3, theta_4, path_time)
+        # self.get_logger().info('I am at z mid')
+                
+        # time.sleep(1)
+        ##Open gripper
+        # self.send_tool_control_request(theta_1, theta_2, theta_3, theta_4, 0.01, path_time)
+        # time.sleep(1)
+        # self.get_logger().info('Opened gripper at z mid')
+
+        # ########################################
+        # ##Go to the object
+
+        # theta_2, theta_3, theta_4 = self.calc_theta(x,y,z)
+
+        # response.joint_vals.data = [theta_1, theta_2, theta_3, theta_4]
+
+        # self.send_goal_joint_space(theta_1, theta_2, theta_3, theta_4, path_time)
+        # self.get_logger().info('I am at object')
+
+        
+        # time.sleep(1)
+        # ##Close gripper
+        # self.send_tool_control_request(theta_1, theta_2, theta_3, theta_4, -0.01, path_time)
+        # time.sleep(1)
+        # self.get_logger().info('Closed tool at object')
+
+        # ########################################
+        # ##Go to the intermediate position
+
+        # theta_2, theta_3, theta_4 = self.calc_theta(x,y,z_mid)
+
+        # self.send_goal_joint_space(theta_1, theta_2, theta_3, theta_4, path_time)
+        # self.get_logger().info('Picked up object')
+
+        
+        ######################################
+        response.joint_vals.data = [theta_1, theta_2, theta_3, theta_4]
         return response
 
 

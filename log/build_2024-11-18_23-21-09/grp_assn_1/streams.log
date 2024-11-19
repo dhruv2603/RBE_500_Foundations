@@ -1,0 +1,27 @@
+[0.410s] Invoking command in '/home/dhruv/rbe500-ros/src/grp_assn_1': AMENT_PREFIX_PATH=/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs:/home/dhruv/rbe500-ros/src/install/custom_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs:/home/dhruv/rbe500-ros/src/install/custom_interfaces:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs/lib:/home/dhruv/rbe500-ros/src/install/custom_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/dhruv/rbe500-ros/src/build/grp_assn_1/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages:/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs/local/lib/python3.10/dist-packages:/home/dhruv/rbe500-ros/src/install/custom_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../build/grp_assn_1 build --build-base /home/dhruv/rbe500-ros/src/build/grp_assn_1/build install --record /home/dhruv/rbe500-ros/src/build/grp_assn_1/install.log --single-version-externally-managed install_data
+[0.554s] running egg_info
+[0.555s] writing ../build/grp_assn_1/grp_assn_1.egg-info/PKG-INFO
+[0.555s] writing dependency_links to ../build/grp_assn_1/grp_assn_1.egg-info/dependency_links.txt
+[0.555s] writing entry points to ../build/grp_assn_1/grp_assn_1.egg-info/entry_points.txt
+[0.555s] writing requirements to ../build/grp_assn_1/grp_assn_1.egg-info/requires.txt
+[0.555s] writing top-level names to ../build/grp_assn_1/grp_assn_1.egg-info/top_level.txt
+[0.556s] reading manifest file '../build/grp_assn_1/grp_assn_1.egg-info/SOURCES.txt'
+[0.556s] adding license file 'LICENSE'
+[0.557s] writing manifest file '../build/grp_assn_1/grp_assn_1.egg-info/SOURCES.txt'
+[0.557s] running build
+[0.557s] running build_py
+[0.558s] copying grp_assn_1/inv_kn_client.py -> /home/dhruv/rbe500-ros/src/build/grp_assn_1/build/lib/grp_assn_1
+[0.558s] running install
+[0.558s] running install_lib
+[0.558s] copying /home/dhruv/rbe500-ros/src/build/grp_assn_1/build/lib/grp_assn_1/inv_kn_client.py -> /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1
+[0.558s] byte-compiling /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1/inv_kn_client.py to inv_kn_client.cpython-310.pyc
+[0.559s] running install_data
+[0.559s] running install_egg_info
+[0.560s] removing '/home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1-0.0.0-py3.10.egg-info' (and everything under it)
+[0.561s] Copying ../build/grp_assn_1/grp_assn_1.egg-info to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages/grp_assn_1-0.0.0-py3.10.egg-info
+[0.561s] running install_scripts
+[0.574s] Installing fwd_kin_exec script to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/grp_assn_1
+[0.574s] Installing inv_kn_cli script to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/grp_assn_1
+[0.574s] Installing inv_kn_server script to /home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/grp_assn_1
+[0.575s] writing list of installed files to '/home/dhruv/rbe500-ros/src/build/grp_assn_1/install.log'
+[0.590s] Invoked command in '/home/dhruv/rbe500-ros/src/grp_assn_1' returned '0': AMENT_PREFIX_PATH=/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs:/home/dhruv/rbe500-ros/src/install/custom_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs:/home/dhruv/rbe500-ros/src/install/custom_interfaces:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs/lib:/home/dhruv/rbe500-ros/src/install/custom_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/dhruv/rbe500-ros/src/build/grp_assn_1/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/dhruv/rbe500-ros/src/install/grp_assn_1/lib/python3.10/site-packages:/home/dhruv/rbe500-ros/src/install/open_manipulator_msgs/local/lib/python3.10/dist-packages:/home/dhruv/rbe500-ros/src/install/custom_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../build/grp_assn_1 build --build-base /home/dhruv/rbe500-ros/src/build/grp_assn_1/build install --record /home/dhruv/rbe500-ros/src/build/grp_assn_1/install.log --single-version-externally-managed install_data
