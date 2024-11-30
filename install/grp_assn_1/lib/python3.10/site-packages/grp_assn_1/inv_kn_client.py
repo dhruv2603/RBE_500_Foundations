@@ -102,13 +102,33 @@ def main(args=None):
             time.sleep(2)
             inverse_kinematics_client.send_tool_control_request(theta[0], theta[1], theta[2], theta[3], 0.01, 2.0)
             time.sleep(2)
+
             theta = inverse_kinematics_client.send_request(x, y, z, ox, oy, oz, ow)
             inverse_kinematics_client.send_goal_joint_space(theta[0], theta[1], theta[2], theta[3], 2.0)
             time.sleep(2)
             inverse_kinematics_client.send_tool_control_request(theta[0], theta[1], theta[2], theta[3], -0.01, 2.0)
             time.sleep(2)
+
             theta = inverse_kinematics_client.send_request(x, y, 70.0, ox, oy, oz, ow)
             inverse_kinematics_client.send_goal_joint_space(theta[0], theta[1]-0.2, theta[2], theta[3], 2.0)
+            time.sleep(2)
+            inverse_kinematics_client.send_goal_joint_space(-theta[0], theta[1]-0.2, theta[2], theta[3], 2.0)
+            time.sleep(2)
+
+            theta = inverse_kinematics_client.send_request(x, y, z, ox, oy, oz, ow)
+            inverse_kinematics_client.send_goal_joint_space(-theta[0], theta[1], theta[2], theta[3], 2.0)
+            time.sleep(2)
+            inverse_kinematics_client.send_tool_control_request(-theta[0], theta[1], theta[2], theta[3], 0.01, 2.0)
+            time.sleep(2)
+            inverse_kinematics_client.send_goal_joint_space(-theta[0], theta[1]-0.5, theta[2], theta[3], 2.0)
+            time.sleep(2)
+
+
+
+
+
+
+
 
 
 
