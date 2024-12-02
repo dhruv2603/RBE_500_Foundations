@@ -39,6 +39,7 @@ class TwistToJointVel(Node):
         self.l5 = 133.4
 
     def joint_pos_callback(self,msg):
+        self.get_logger().debug(f"Current joint positions: {self.joint_pos_msg}")
         self.joint_pos_msg = msg.position
 
     def transformation_matrix(self,a,theta,d,alpha):

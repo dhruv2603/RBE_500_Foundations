@@ -15,16 +15,15 @@ from custom_interfaces.srv import Twist
 class IncrementalPositionClient(Node):
     def __init__(self):
         super().__init__('incremental_position_client')
-        
         self.move_joints_client = self.create_client(SetJointPosition,'goal_joint_space_path')
         self.move_joints_client_req = SetJointPosition.Request()
 
         self.twist_to_joint__vel_client = self.create_client(
             Twist,
             'cal_joint_vel',
-        ) # Create client for end effector to joint velocity kinematics service
+            ) # Create client for end effector to joint velocity kinematics service
         self.twist_to_joint_vel_client_req = Twist.Request()
-
+       
         self.l0 = 36.076
         self.l1 = 60.25
         self.l2 = 128.0
@@ -32,6 +31,8 @@ class IncrementalPositionClient(Node):
         self.l4 = 124.0
         self.l5 = 133.4
 
+        self.joint_pos_msg = []
+    
     def send_move_joint_request(self, theta_1, theta_2, theta_3, theta_4, path_time):
         self.move_joints_client_req.joint_position.joint_name = ['joint1', 'joint2', 'joint3', 'joint4', 'gripper']
         self.move_joints_client_req.joint_position.position = [theta_1, theta_2, theta_3, theta_4, 0.0]
@@ -86,7 +87,7 @@ class IncrementalPositionClient(Node):
         A0 = numpy.array([[ 1, 0, 0, 0],
                           [ 0, 1, 0, 0], 
                           [ 0, 0, 1, self.l0],
-                          [ 0,0,0,1]] , dtype= object)
+                          [ 0,0,0,1]])
         
         
         "For Link 1"
@@ -94,7 +95,7 @@ class IncrementalPositionClient(Node):
         theta1 = q1
         d1 = self.l1
         alpha1 = -numpy.pi/2
-        A1 = self.transformation_matrix(self,a1,theta1,d1,alpha1)
+        A1 = self.transformation_matrix(a1,theta1,d1,alpha1)
         H1 = numpy.matmul(A1,A0)
 
         "For Link 2"
@@ -102,7 +103,7 @@ class IncrementalPositionClient(Node):
         theta2 = -numpy.arctan2(self.l2,self.l3) + q2
         d2 = 0 
         alpha2 = 0
-        A2 = self.transformation_matrix(self,a2,theta2,d2,alpha2)
+        A2 = self.transformation_matrix(a2,theta2,d2,alpha2)
         H2 = numpy.matmul(H1,A2)
 
         "For Link 3"
@@ -110,15 +111,15 @@ class IncrementalPositionClient(Node):
         theta3 = numpy.arctan2(self.l2,self.l3) + q3
         d3 = 0
         alpha3 = 0
-        A3 = self.transformation_matrix(self,a3,theta3,d3,alpha3)
-        H3 = numpy.matmul(H2,H3)
+        A3 = self.transformation_matrix(a3,theta3,d3,alpha3)
+        H3 = numpy.matmul(H2,A3)
 
         "For Link 4"
         a4 = self.l5
         theta4 = q4
         d4 = 0
         alpha4 = 0
-        A4 = self.transformation_matrix(self,a4,theta4,d4,alpha4)
+        A4 = self.transformation_matrix(a4,theta4,d4,alpha4)
         H4 = numpy.matmul(H3,A4)
 
         # Extract position
@@ -132,7 +133,7 @@ class IncrementalPositionClient(Node):
 def main():
     rclpy.init()
     vx = float(0.0)
-    vy = float(2.0)
+    vy = float(1.0)
     vz = float(0.0)
     wx = float(0.0)
     wy = float(0.0)
@@ -142,14 +143,19 @@ def main():
     incremental_position_client = IncrementalPositionClient()
 
     """ Step 1: Send end effector velocities to end effector to joint velocity kinematics service """
-    total_time = 50
-    samples = 50
+    total_time = 100
+    samples = 100
     sampling_time = total_time/samples
+
+
 
     joint1 = 0.0
     joint2 = 0.0
     joint3 = 0.0
     joint4 = 0.0
+
+    response = incremental_position_client.send_move_joint_request(joint1, joint2, joint3, joint4, sampling_time)
+    incremental_position_client.get_logger().info('At Home Configuration:')
 
     joint_traj = []
 
@@ -161,6 +167,8 @@ def main():
         joint4 += joint_velocities.joint_vel.data[3]*sampling_time
 
         joint_traj.append([joint1, joint2, joint3, joint4, 0.0])
+        response = incremental_position_client.send_move_joint_request(joint1, joint2, joint3, joint4, sampling_time)
+        incremental_position_client.get_logger().info('Joint Space Path Planning: %s' % (response))
     
     incremental_position_client.get_logger().info("Twist Service: True")
 
@@ -175,10 +183,21 @@ def main():
         coords.append(round(z))
         path.append(coords)
         # Send request to goal joint space path planning service
-        response = incremental_position_client.send_move_joint_request(joints[0], joints[1], joints[2], joints[3], sampling_time)
-        incremental_position_client.get_logger().info('Joint Space Path Planning: %s' % (response.is_planned))
+        # response = incremental_position_client.send_move_joint_request(joints[0], joints[1], joints[2], joints[3], sampling_time)
+        # incremental_position_client.get_logger().info('Joint Space Path Planning: %s' % (response))
         step_count += 1
         time.sleep(0.5)
+    
+    # Define the file path
+    file_path = '/home/dhruv/Workspace/WPI/Sem1/Foundations/Group Assignment 2/trajectory.txt'
+    # Save the path to the file
+    i=1
+    with open(file_path, 'w') as file:
+        for coords in path:
+            file.write(f"{coords[0]} {coords[1]} {coords[2]} {sampling_time*i}\n")
+            i += 1
+
+    incremental_position_client.get_logger().info(f"Path saved to {file_path}")
 
 if __name__ == '__main__':
     main()
