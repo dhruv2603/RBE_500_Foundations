@@ -17,6 +17,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/InvKin.srv"
   "srv/JointVel.srv"
   "srv/Twist.srv"
+  "srv/PosRef.srv"
   DEPENDENCIES std_msgs geometry_msgs # Add packages that above messages depend on
 
 )

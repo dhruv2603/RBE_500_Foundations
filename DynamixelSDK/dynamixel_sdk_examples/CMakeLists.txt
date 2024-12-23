@@ -26,9 +26,24 @@ ament_target_dependencies(read_write_node
   rclcpp
 )
 
+add_executable(current_read_write_node src/current_read_write_node.cpp) # Added the current control node
+ament_target_dependencies(current_read_write_node
+  dynamixel_sdk_custom_interfaces
+  dynamixel_sdk
+  rclcpp
+)
+add_executable(combined_read_write src/combined_read_write.cpp) # Added the current control node
+ament_target_dependencies(combined_read_write
+  dynamixel_sdk_custom_interfaces
+  dynamixel_sdk
+  rclcpp
+)
+
 # Install
 install(TARGETS
   read_write_node
+  combined_read_write
+  current_read_write_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
