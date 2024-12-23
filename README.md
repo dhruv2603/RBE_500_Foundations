@@ -1,3 +1,5 @@
+# Foundations of Robotics Hands-on Project
+### *RBE500: Foundations of Robotics - [Worcester Polytechnic Institute](https://www.wpi.edu/), Fall 2024*
 # OpenManipulatorX_ROS2
 ROS2 Humble packages to control Open Manipulator X
 
